@@ -1,0 +1,204 @@
+:root {
+  --gutter: 28px;
+  --gutter-dense: 12px;
+  --ink: #1a1a1a;
+  --ink-soft: #6b6b6b;
+  --bg: #fafaf8;
+  --border: #e3e2dd;
+  --focus: #2f6fed;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, "Segoe UI", sans-serif;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 40px 80px;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 40px;
+}
+
+.site-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+}
+
+.site-links { display: flex; gap: 20px; }
+.site-links a {
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.site-links a:hover { color: var(--ink); }
+
+/* --- grid: CSS-columns masonry today, native grid-lanes when it's ready --- */
+.grid {
+  column-count: 4;
+  column-gap: var(--gutter);
+}
+@media (max-width: 900px) { .grid { column-count: 3; } }
+@media (max-width: 600px) { .grid { column-count: 2; } }
+
+.grid--dense {
+  column-count: 6;
+  column-gap: var(--gutter-dense);
+}
+@media (max-width: 900px) { .grid--dense { column-count: 4; } }
+@media (max-width: 600px) { .grid--dense { column-count: 3; } }
+
+@supports (display: grid-lanes) {
+  .grid, .grid--dense {
+    display: grid-lanes;
+    grid-template-columns: repeat(4, 1fr);
+    column-count: initial;
+  }
+  .grid--dense { grid-template-columns: repeat(6, 1fr); }
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+    .grid--dense { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .grid--dense { grid-template-columns: repeat(3, 1fr); }
+  }
+}
+
+.thumb {
+  display: block;
+  position: relative;
+  break-inside: avoid;
+  margin-bottom: var(--gutter);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.grid--dense .thumb { margin-bottom: var(--gutter-dense); }
+
+.thumb picture, .thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.thumb img {
+  filter: grayscale(1) contrast(0.97);
+  transition: filter 0.3s ease;
+}
+.thumb:hover img, .thumb:focus-visible img {
+  filter: grayscale(0);
+}
+
+.thumb:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.thumb-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.thumb-badge-count {
+  color: #fff;
+  font-size: 11px;
+}
+
+/* --- archive filter chips --- */
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-bottom: 24px;
+  border-bottom: 0.5px solid var(--border);
+  margin-bottom: 24px;
+}
+.chip {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 0.5px solid var(--border);
+  background: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.chip.is-active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.thumb[hidden] { display: none; }
+
+/* --- overlay --- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.overlay[hidden] { display: none; }
+
+.overlay img {
+  max-width: 84vw;
+  max-height: 78vh;
+  display: block;
+}
+
+.overlay-nav {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 15%;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 28px;
+  cursor: pointer;
+}
+.overlay-nav:hover { color: rgba(255, 255, 255, 0.95); }
+.overlay-nav--prev { left: 0; justify-content: flex-start; padding-left: 24px; }
+.overlay-nav--next { right: 0; justify-content: flex-end; padding-right: 24px; }
+
+.overlay-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.overlay-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .thumb img { transition: filter 0.3s ease; }
+}

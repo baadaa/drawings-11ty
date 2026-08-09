@@ -1,0 +1,55 @@
+---
+layout: base.njk
+title: Archive — Drawings
+permalink: /archive/
+---
+<div class="page">
+  <header class="site-header">
+    <span class="site-title">Archive</span>
+    <nav class="site-links">
+      <a href="/">Drawings</a>
+      <a href="https://example.com" target="_blank" rel="noopener">Site ↗</a>
+    </nav>
+  </header>
+
+  <div class="filters" role="group" aria-label="Filter by tag or year">
+    <button class="chip is-active" data-filter-type="all">All</button>
+    {% for tag in collections.tags %}
+    <button class="chip" data-filter-type="tag" data-filter-value="{{ tag }}">{{ tag }}</button>
+    {% endfor %}
+    {% for year in collections.years %}
+    <button class="chip" data-filter-type="year" data-filter-value="{{ year }}">{{ year }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="grid grid--dense" id="archive-grid" role="list">
+    {% for art in artworks %}
+    <a
+      class="thumb"
+      href="#{{ art.slug }}"
+      role="listitem"
+      data-index="{{ loop.index0 }}"
+      data-tags="{{ art.tags | join(',') }}"
+      data-year="{{ art.year }}"
+      style="aspect-ratio: {{ art.cover.aspectRatio }};"
+      tabindex="{{ '0' if loop.first else '-1' }}"
+      aria-label="{{ art.title }}{% if art.isCollection %}, collection of {{ art.count }} images{% endif %}"
+    >
+      <picture>
+        <source srcset="{{ art.cover.thumb.webp }}" type="image/webp">
+        <img src="{{ art.cover.thumb.jpeg }}" alt="" loading="lazy" width="{{ art.cover.width }}" height="{{ art.cover.height }}">
+      </picture>
+      {% if art.isCollection %}
+      <span class="thumb-badge" aria-hidden="true">
+        <span class="thumb-badge-count">{{ art.count }}</span>
+      </span>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+<script type="application/json" id="artwork-data">
+{{ artworks | dump | safe }}
+</script>
+<script src="/js/archive-filters.js" defer></script>
