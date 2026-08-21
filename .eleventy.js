@@ -1,7 +1,8 @@
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
-
+  eleventyConfig.addPassthroughCopy({ "src/static": "static" });
+  
   // unique tags across all artworks, alphabetical — feeds the archive filter chips
   eleventyConfig.addCollection("tags", (api) => {
     const artworks = api.getAll()[0]?.data.artworks || [];
