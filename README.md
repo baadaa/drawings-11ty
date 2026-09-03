@@ -45,6 +45,3 @@ Visit `http://localhost:8080`.
 - `@11ty/eleventy-img` is pinned to v5 — v7 rewrote its API (class-based, no more
   default export) and isn't a drop-in swap. Worth revisiting once that API stabilizes
   and its docs catch up.
-- The three sample artwork folders included are solid-color placeholders so you have
-  something to look at immediately — swap them for real scans and delete the sample
-  `meta.yaml` files you don't need.

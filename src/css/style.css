@@ -121,6 +121,7 @@ body {
 .about-text p {
   font-size: 15px;
   line-height: 1.6;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   color: var(--ink);
 }
 .about-links { display: flex; gap: 20px; margin-top: 24px; justify-content: center; }
