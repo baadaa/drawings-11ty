@@ -27,15 +27,19 @@ body {
 .site-header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   padding-bottom: 40px;
 }
 
 .site-title {
-  font-size: 20px;
+  font-size: 28px;
   font-weight:700;
   color: var(--ink);
   text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .site-title { font-size: 24px; }
 }
 
 .site-nav { display: flex; gap: 20px; }
